@@ -1,0 +1,1 @@
+{"name":"website-research-random-url","version":"1.0.0","private":true,"type":"module","scripts":{"test":"node --test test/service.test.js","local":"node local-server.mjs","deploy":"wrangler deploy","check":"wrangler deploy --dry-run --outdir build"},"devDependencies":{"wrangler":"^4.0.0"}}

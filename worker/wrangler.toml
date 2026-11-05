@@ -1,0 +1,10 @@
+name = "website-research-random-url"
+main = "src/index.js"
+compatibility_date = "2026-11-05"
+workers_dev = true
+
+[vars]
+# Set to an immutable GitHub raw commit containing publish/manifest.json.
+MANIFEST_URL = ""
+DEFAULT_POOL = "verified"
+DEFAULT_CATEGORY = ""
