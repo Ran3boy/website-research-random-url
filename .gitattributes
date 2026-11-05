@@ -1,0 +1,3 @@
+# Manifest hashes require identical dataset bytes on Windows and Linux.
+publish/**/*.txt text eol=lf
+publish/**/*.json text eol=lf

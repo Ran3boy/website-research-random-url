@@ -65,7 +65,7 @@ export function createService({fetcher=fetch, cache=globalThis.caches?.default, 
   async function load(url,max,ttl) {
     const key=new Request(url); let response=cache ? await cache.match(key) : undefined;
     if (response) return limitedText(response,max);
-    response=await fetcher(key,{redirect:'error',signal:AbortSignal.timeout(10000),headers:{Accept:'text/plain,application/json'}});
+    response=await fetcher(key,{redirect:'manual',signal:AbortSignal.timeout(10000),headers:{Accept:'text/plain,application/json'}});
     const text=await limitedText(response,max);
     if(cache)await cache.put(key,new Response(text,{headers:{'Cache-Control':`public,max-age=${ttl}`}}));
     return text;
@@ -94,7 +94,8 @@ export function createService({fetcher=fetch, cache=globalThis.caches?.default, 
       const lines=text.split('\n');if(lines.at(-1)==='')lines.pop();
       if(lines.length!==chunk.count || !validURL(lines[offset]))throw new Error('Invalid selected URL');
       return new Response(lines[offset]+'\n',{headers:{'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
-    } catch {
+    } catch (error) {
+      console.error('dataset_failure', String(error?.message || 'unknown').replace(/https?:\/\/\S+/g,'[URL]').replace(/[A-Za-z0-9_-]{40,}/g,'[VALUE]').slice(0,180));
       // No raw upstream URLs, response bodies or credentials enter responses/logs.
       return new Response('Dataset unavailable or invalid\n',{status:503,headers:{'Cache-Control':'no-store'}});
     }

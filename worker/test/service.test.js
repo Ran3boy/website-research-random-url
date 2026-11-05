@@ -29,6 +29,12 @@ test('one domain has one vote; category size 1 versus 9',async()=>{
 test('rejection sampling avoids modulo bias',()=>{
  let k=0;const random={getRandomValues(v){v[0]=k++===0?0xffffffff:8;}};assert.equal(randomIndex(10,random),8);assert.equal(k,2);
 });
+test('Cloudflare-compatible fetch rejects source redirects without following',async()=>{
+ let calls=0;
+ const h=createService({fetcher:async(req,options)=>{calls++;assert.equal(options.redirect,'manual');return new Response(null,{status:302,headers:{Location:'https://untrusted.invalid/'}});}});
+ const r=await h(new Request('https://service/random'),env);
+ assert.equal(r.status,503);assert.equal(calls,1);
+});
 test('success is exactly one HTTPS URL and a newline',async()=>{
  const f=await fixture();const h=createService({fetcher:f.fetcher});const r=await h(new Request('https://service/random?category=Small'),env);
  assert.equal(r.status,200);assert.equal(await r.text(),'https://example.com/\n');assert.match(r.headers.get('Content-Type'),/^text\/plain/);assert.equal(r.headers.get('Cache-Control'),'no-store');
