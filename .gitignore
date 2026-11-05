@@ -3,3 +3,4 @@ node_modules/
 build/
 .dev.vars
 .env*
+local_http_tests.json

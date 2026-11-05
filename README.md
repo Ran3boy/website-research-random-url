@@ -26,3 +26,9 @@ Deployment requires your authorized Cloudflare account. The committed manifest U
 is pinned to an immutable GitHub commit. No public Worker endpoint exists until an
 authorized deployment succeeds. Do not put account credentials in this repository.
 The selected URL is returned as text/plain and is never fetched by the service.
+
+For local-only use, run `npm run local` from worker/. It prints a temporary
+127.0.0.1 endpoint and uses packaged data without fetching selected websites.
+Run `node test-local-http.mjs` for 1,031 HTTP format/distribution/filter checks.
+Stop the local Node process when finished. Local diagnostics are not deployment
+results and should not be committed.
