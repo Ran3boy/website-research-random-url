@@ -5,6 +5,6 @@ workers_dev = true
 
 [vars]
 # Set to an immutable GitHub raw commit containing publish/manifest.json.
-MANIFEST_URL = ""
+MANIFEST_URL = "https://raw.githubusercontent.com/Ran3boy/website-research-random-url/ed07992dc83e4edf97f33c49d281bcc17ff85dd5/publish/manifest.json"
 DEFAULT_POOL = "verified"
 DEFAULT_CATEGORY = ""
